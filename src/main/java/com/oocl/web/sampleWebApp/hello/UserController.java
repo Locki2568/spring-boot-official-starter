@@ -3,36 +3,27 @@ package com.oocl.web.sampleWebApp.hello;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
-@Controller
+@RestController
 @RequestMapping("/users")
 public class UserController {
 
-    UserService userService;
+    //UserService userService;
 
-    @Autowired
-    public UserController(UserService userService){
-        this.userService = userService;
-    }
-
-//    @RequestMapping(value = "/", method = POST)
-//    public @ResponseBody
-//    String greeting() {
-//        return "Hello World";
+//    @Autowired
+//    public UserController(UserService userService){
+//        this.userService = userService;
 //    }
 
-    @PostMapping(produces = {"application/json"},consumes = {"application/json"})
+    @PostMapping()
     public ResponseEntity<String> initiateUser(@RequestBody User user){
-        int id = this.userService.save(user);
+        int id = user.getId();
         return ResponseEntity.created(URI.create("/users/"+id)).body("Hello World");
     }
 }
